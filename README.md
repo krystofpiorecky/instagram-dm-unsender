@@ -2,7 +2,13 @@
 
 ## ⚠️ Warning ⚠️
 Works now (May 2025) but will most likely break in the near future :D It's still a solid and simple starting point for anyone to adjust it when you need it (as i did) 🫡
+
 (tested with TamperMonkey)
+
+## ℹ️ Strategy
+The script is looking for a role="button" inside a role="dialog" and then selects the button with textContent "UnsendUnsend".
+
+You HAVE to use ENGLISH for it to work. ⚠️
 
 ## How to
 A userscript that will unsend your Instagram messages. 
