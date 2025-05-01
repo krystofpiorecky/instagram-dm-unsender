@@ -10,6 +10,8 @@
 (function() {
     'use strict';
 
+    console.log("loaded");
+
     const BUTTON_STYLE = { "PRIMARY": "primary", "SECONDARY": "secondary" };
 
     function applyButtonStyle(buttonElement, styleName = BUTTON_STYLE.PRIMARY) {
@@ -116,44 +118,13 @@
     }
 
     function findMenuItemAndClick() {
+        // Find Unsend menu item
+        console.log("findMenuItemAndClick");
         const resultPromise = waitForElementToExist(() => {
-            const menuItems = document.querySelectorAll('div[role="menuitem"]');
-            let matchCounter = 0;
-            for (const menuItem of menuItems) {
-                matchCounter++;
-                if (matchCounter === 3) {
-                    const parentDiv = menuItem.parentElement;
-                    if (parentDiv.getAttribute('role') === 'none') {
-                        return menuItem;
-                    } else {
-                        console.log('The parent div of the third menu item does not have role="none"');
-                        finishedSimulateMouseHover = true;
-                        return undefined;
-                    }
-                }
-                if (menuItems.length === 2) {
-                    const singleMenuItem = menuItems[1];
-                    const parentDiv = singleMenuItem.parentElement;
-                    if (parentDiv.getAttribute('role') === 'none') {
-                        return singleMenuItem;
-                    } else {
-                        console.log('The parent div of the single menu item does not have role="none"');
-                        finishedSimulateMouseHover = true;
-                        return undefined;
-                    }
-                }
-                if (menuItems.length === 1) {
-                    const singleMenuItem = menuItems[0];
-                    const parentDiv = singleMenuItem.parentElement;
-                    if (parentDiv.getAttribute('role') === 'none') {
-                        return singleMenuItem;
-                    } else {
-                        console.log('The parent div of the single menu item does not have role="none"');
-                        finishedSimulateMouseHover = true;
-                        return undefined;
-                    }
-                }
-            }
+            const menuItems = Array.from(document.querySelectorAll('div[role="dialog"] div[role="button"]'));
+            console.log("menuItems", menuItems);
+            const item = menuItems.find(item => item.textContent === "UnsendUnsend");
+            return item;
         });
 
         resultPromise.then((menuItem) => {
@@ -209,6 +180,7 @@
     document.addEventListener('click', (event) => {
         const target = event.target;
         if (target.tagName === 'BUTTON' && target.textContent === 'Unsend All Messages') {
+            console.log("start");
             active = !active;
             if (active) {
                 runLoop();
